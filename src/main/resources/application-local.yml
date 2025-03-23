@@ -1,8 +1,0 @@
-# 对象存储配置（需要从腾讯云获取）
-cos:
-  client:
-    host: xxx
-    secretId: xxx
-    secretKey: xxx
-    region: xxx
-    bucket: xxx
