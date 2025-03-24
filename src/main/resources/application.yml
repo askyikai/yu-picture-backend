@@ -5,6 +5,8 @@ server:
 spring:
   application:
     name: yu-picture-backend
+  profiles:
+    active: local
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/yu_picture
