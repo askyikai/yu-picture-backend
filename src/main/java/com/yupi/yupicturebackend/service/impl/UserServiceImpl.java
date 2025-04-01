@@ -109,10 +109,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         // judge login
         Object userObj = request.getSession().getAttribute(USER_LOGIN_STATE);
         User currentUser = (User) userObj;
-        Long id = currentUser.getId();
-        if (currentUser == null || id == null) {
+        if (currentUser == null || currentUser.getId() == null) {
             throw new BusinessException(ErrorCode.NOT_LOGIN_ERROR);
         }
+        Long id = currentUser.getId();
         // query new information
         currentUser = this.getById(id);
         ThrowUtils.throwIf(currentUser == null, ErrorCode.NOT_LOGIN_ERROR);
@@ -184,6 +184,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         userQueryWrapper.eq(StrUtil.isNotBlank(userRole), "userRole", userRole);
         userQueryWrapper.orderBy(StrUtil.isNotBlank(sortField), "ascend".equals(sortOrder), sortField);
         return userQueryWrapper;
+    }
+
+    @Override
+    public boolean isAdmin(User user) {
+        return user != null && UserRoleEnum.ADMIN.getValue().equals(user.getUserRole());
     }
 
 

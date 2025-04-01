@@ -17,7 +17,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.io.File;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -78,9 +80,13 @@ public class FileManager {
     private void validPicture(MultipartFile multipartFile) {
         ThrowUtils.throwIf(multipartFile == null, ErrorCode.PARAMS_ERROR, "文件不能为空");
         // 文件大小不能超过2M
-
+        long fileSize = multipartFile.getSize();
+        final long ONE_M = 1024 * 1024;
+        ThrowUtils.throwIf(fileSize > 2 * ONE_M, ErrorCode.PARAMS_ERROR, "文件大小不能超过2M");
         // 文件后缀只允许图片形式的文件，jpeg，jpg，png，webp
-
+        String fileSuffix = FileUtil.getSuffix(multipartFile.getOriginalFilename());
+        final List<String> ALLOW_FORMAT_LIST = Arrays.asList("jpg", "jpeg", "png", "webp");
+        ThrowUtils.throwIf(!ALLOW_FORMAT_LIST.contains(fileSuffix), ErrorCode.PARAMS_ERROR, "file type error");
     }
 
     /**
@@ -91,8 +97,8 @@ public class FileManager {
         if (file == null || !file.exists()) {
             return;
         }
-        boolean delete = file.delete();
-        if (!delete) {
+        boolean deleteResult = file.delete();
+        if (!deleteResult) {
             log.error("fail to delete temp file, filepath = {}", file.getAbsolutePath());
         }
     }

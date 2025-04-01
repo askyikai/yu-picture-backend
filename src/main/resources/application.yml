@@ -7,6 +7,9 @@ spring:
     name: yu-picture-backend
   profiles:
     active: local
+  servlet:
+    multipart:
+      max-file-size: 10MB
 mybatis-plus:
   configuration:
     # MyBatis 配置
