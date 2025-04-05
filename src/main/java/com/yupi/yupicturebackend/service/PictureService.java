@@ -3,6 +3,7 @@ package com.yupi.yupicturebackend.service;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yupi.yupicturebackend.model.dto.picture.PictureQueryRequest;
+import com.yupi.yupicturebackend.model.dto.picture.PictureReviewRequest;
 import com.yupi.yupicturebackend.model.dto.picture.PictureUploadRequest;
 import com.yupi.yupicturebackend.model.entity.Picture;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -13,13 +14,14 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 
 /**
-* @author ken
-* @description 针对表【picture(图片)】的数据库操作Service
-* @createDate 2025-03-24 19:54:21
-*/
+ * @author ken
+ * @description 针对表【picture(图片)】的数据库操作Service
+ * @createDate 2025-03-24 19:54:21
+ */
 public interface PictureService extends IService<Picture> {
     /**
      * upload picture
+     *
      * @param multipartFile
      * @param pictureUploadRequest
      * @param loginUser
@@ -29,6 +31,7 @@ public interface PictureService extends IService<Picture> {
 
     /**
      * get query wrapper
+     *
      * @param pictureQueryRequest
      * @return
      */
@@ -36,6 +39,7 @@ public interface PictureService extends IService<Picture> {
 
     /**
      * get picture link user info
+     *
      * @param picture
      * @param request
      * @return
@@ -45,6 +49,7 @@ public interface PictureService extends IService<Picture> {
 
     /**
      * get picture list
+     *
      * @param picturePage
      * @param request
      * @return
@@ -53,7 +58,23 @@ public interface PictureService extends IService<Picture> {
 
     /**
      * valid picture
+     *
      * @param picture
      */
     void validPicture(Picture picture);
+
+    /**
+     * picture review
+     *
+     * @param pictureReviewRequest
+     * @param loginUser
+     */
+    void doPictureReview(PictureReviewRequest pictureReviewRequest, User loginUser);
+
+    /**
+     *
+     * @param picture
+     * @param loginUser
+     */
+    void fillReviewParams(Picture picture, User loginUser);
 }
