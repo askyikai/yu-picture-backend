@@ -219,7 +219,7 @@ public class PictureServiceImpl extends ServiceImpl<PictureMapper, Picture>
         // 将图片审核请求对象赋值给更新图片对象
         BeanUtils.copyProperties(pictureReviewRequest, updatePicture);
         // 设置更新图片对象的审核人ID为用户ID
-        updatePicture.setId(loginUser.getId());
+        updatePicture.setReviewerId(loginUser.getId());
         // 设置更新图片对象的审核时间为当前时间
         updatePicture.setReviewTime(new Date());
         // 更新数据库
